@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class FileTest {
 	public static void main(String[] args) {
@@ -11,6 +13,7 @@ public class FileTest {
 	}
 
 	public FileTest() {
+		makeDummyFiles(120);
 		listupFiles("d:\\javaFile");
 	}
 	
@@ -18,6 +21,7 @@ public class FileTest {
 		File pDir = makeDir(pPath);
 		File file=new File(pDir,"fileName.json");
 		String n="";
+		ArrayList<File> readList=new ArrayList<File>();
 		
 		FilenameFilter filter = new FilenameFilter() {
 			
@@ -26,10 +30,14 @@ public class FileTest {
 			}
 		};
 		
+		
 		for(File pFile:pDir.listFiles(filter)){
 			n+=pFile.getName()+"\n";
+//			readList.add(pFile);
 			System.out.println(pFile.getAbsolutePath());
 		}
+		
+
 		try {
 			FileWriter fw = new FileWriter(file);
 			fw.write(n);
@@ -45,7 +53,7 @@ public class FileTest {
 		try {
 
 			for (int i = 0; i < pFileCount; i++) {
-				FileWriter fw = new FileWriter(new File(pDir, "t" + String.valueOf(i) + ".txt"));
+				FileWriter fw = new FileWriter(new File(pDir, String.format("%03d", i)+ ".txt"));
 
 				for (int j = 0; j < (1500); j++) {
 					fw.write(String.valueOf(j) + " : file write test\r\n");
